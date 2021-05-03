@@ -29,7 +29,7 @@ function Nav() {
         <img
           className="nav__avatar"
           src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
-          alt="avatr"
+          alt="avatar"
         />
       </div>
     </div>
