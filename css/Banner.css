@@ -4,6 +4,7 @@
      object-fit: contain;
   color: white;
   height: 448px;
+  margin-bottom: 20px;
 }
 
 .banner__contents {
