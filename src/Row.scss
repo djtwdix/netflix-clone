@@ -2,7 +2,7 @@
   color: white;
   margin-left: 20px;
   &__poster {
-    max-height: 200px;
+    max-height: 100px;
     object-fit: contain;
     margin-right: 10px;
     border-radius: 2px;
@@ -15,7 +15,7 @@
     }
   }
   &__posterLarge {
-    max-height: 300px;
+    max-height: 200px;
     &:hover {
       transform: scale(1.09);
       opacity: 1;
