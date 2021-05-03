@@ -4,7 +4,7 @@
 }
 
 .row__poster {
-  max-height: 200px;
+  max-height: 100px;
   -o-object-fit: contain;
      object-fit: contain;
   margin-right: 10px;
@@ -24,7 +24,7 @@
 }
 
 .row__posterLarge {
-  max-height: 300px;
+  max-height: 200px;
 }
 
 .row__posterLarge:hover {
