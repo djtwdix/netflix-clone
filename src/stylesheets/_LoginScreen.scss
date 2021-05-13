@@ -1,0 +1,88 @@
+.loginScreen {
+  position: relative;
+  height: 100%;
+  background: url("https://cdn.hipwallpaper.com/i/98/21/dUyCkp.jpg") center
+    no-repeat;
+  background-size: cover;
+  object-fit: contain;
+  &__gradient {
+    width: 100%;
+    z-index: 1;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    background-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.5) 0,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+  }
+  &__logo {
+    position: fixed;
+    left: 0;
+    width: 150px;
+    object-fit: contain;
+    padding-left: 20px;
+  }
+  &__button {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    padding: 10px 20px;
+    background-color: #e50914;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  &__body {
+    left: 0;
+    right: 0;
+    z-index: 1;
+    color: white;
+    padding: 20px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    top: 15%;
+    h1 {
+      margin-top: 10%;
+      font-size: 3.125rem;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+  }
+  &__input {
+    margin: 20px;
+    form {
+      input {
+        padding: 10px;
+        outline-width: 0;
+        height: 30px;
+        width: 30%;
+        border: none;
+        max-width: 600px;
+      }
+    }
+  }
+  &__getStarted {
+    padding: 16px 20px;
+    background-color: #e50914;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
