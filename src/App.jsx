@@ -12,7 +12,6 @@ import { selectUser } from "./features/userSlice";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  console.log("user: ", user);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {

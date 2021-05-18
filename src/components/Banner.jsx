@@ -18,8 +18,6 @@ function Banner() {
     fetchData();
   }, []);
 
-  console.log(movie);
-
   const truncate = (desc, n) => {
     return desc?.length > n ? desc.substr(0, n - 1) + "..." : desc;
   };
