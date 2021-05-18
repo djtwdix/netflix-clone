@@ -13,9 +13,16 @@
     padding: 10px 20px;
     font-size: 1rem;
     color: white;
+    min-width: 125px;
     background-color: #e50914;
     font-weight: 600;
     border: none;
     cursor: pointer;
+  }
+  .disabled {
+    background-color: grey;
+  }
+  &__renewal {
+    margin-top: 1rem;
   }
 }
