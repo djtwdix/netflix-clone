@@ -1,21 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase/config";
 import { selectUser } from "../features/userSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
+import {
+  storeSubscription,
+  selectSubscription,
+} from "../features/subscriptionSlice";
 
 function PlansScreen() {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  console.log("user: ", user);
+  const subscriptionRedux = useSelector(selectSubscription);
   const [products, setProducts] = useState([]);
-  console.log("products: ", products);
+
+  useEffect(() => {
+    db.collection("customers")
+      .doc(user.uid)
+      .collection("subscriptions")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach(async (subscription) => {
+          dispatch(
+            storeSubscription({
+              role: subscription.data().role,
+              current_period_end:
+                subscription.data().current_period_end.seconds,
+              current_period_start:
+                subscription.data().current_period_start.seconds,
+            })
+          );
+        });
+      });
+  }, [user.uid, dispatch]);
 
   useEffect(() => {
     db.collection("products")
       .where("active", "==", true)
       .get()
       .then((querySnapshot) => {
-        console.log("querySnapshot: ", querySnapshot);
         const products = {};
         querySnapshot.forEach(async (productDoc) => {
           products[productDoc.id] = productDoc.data();
@@ -42,11 +65,7 @@ function PlansScreen() {
         cancel_url: window.location.origin,
       });
 
-    console.log("docRef:", docRef);
-
     docRef.onSnapshot(async (snap) => {
-      console.log("snap: ", snap);
-
       const { error, sessionId } = snap.data();
       if (error) {
         alert(`An error occured: ${error.message}`);
@@ -62,7 +81,16 @@ function PlansScreen() {
 
   return (
     <div className="plansScreen">
+      <p className="plansScreen__renewal">
+        Renewal date:{" "}
+        {new Date(
+          subscriptionRedux?.current_period_end * 1000
+        ).toLocaleDateString()}
+      </p>
       {Object.entries(products).map(([productId, productData]) => {
+        const isCurrentPackage = productData.name.includes(
+          subscriptionRedux?.role
+        );
         return (
           <div key={productId} className="plansScreen__plan">
             <div className="plansScreen__info">
@@ -70,10 +98,16 @@ function PlansScreen() {
               <h6>{productData.description}</h6>
             </div>
             <button
-              onClick={() => loadCheckout(productData.prices.priceId)}
-              className="plansScreen__subscribe"
+              onClick={() =>
+                !isCurrentPackage && loadCheckout(productData.prices.priceId)
+              }
+              className={
+                !isCurrentPackage
+                  ? "plansScreen__subscribe"
+                  : "plansScreen__subscribe disabled"
+              }
             >
-              Subscribe
+              {isCurrentPackage ? "Current" : "Subscribe"}
             </button>
           </div>
         );
