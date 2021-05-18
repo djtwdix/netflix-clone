@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { db } from "../firebase/config";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
+import { loadStripe } from "@stripe/stripe-js";
 
 function PlansScreen() {
   const user = useSelector(selectUser);
+  console.log("user: ", user);
   const [products, setProducts] = useState([]);
   console.log("products: ", products);
 
@@ -33,14 +35,29 @@ function PlansScreen() {
     const docRef = await db
       .collection("customers")
       .doc(user.uid)
-      .collection("checkout")
+      .collection("checkout_sessions")
       .add({
         price: priceId,
         success_url: window.location.origin,
         cancel_url: window.location.origin,
       });
 
-    docRef.onSnapshot();
+    console.log("docRef:", docRef);
+
+    docRef.onSnapshot(async (snap) => {
+      console.log("snap: ", snap);
+
+      const { error, sessionId } = snap.data();
+      if (error) {
+        alert(`An error occured: ${error.message}`);
+      }
+      if (sessionId) {
+        const stripe = await loadStripe(
+          "pk_test_51HAf6ALYq6U8xexmHzxDDXHA51OXTdQd76JG1ayxIwsoFimFu9RbwshlvBjw0wPiu53Tp0FBa2OVlLUG2Tf87RUH006MXXLmZv"
+        );
+        stripe.redirectToCheckout({ sessionId });
+      }
+    });
   };
 
   return (
