@@ -1,0 +1,21 @@
+.plansScreen {
+  &__plan {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    opacity: 0.8;
+    align-items: center;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &__subscribe {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #e50914;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
+}
